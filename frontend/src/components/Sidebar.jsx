@@ -99,15 +99,6 @@ const Sidebar = () => {
       <div className="border-t-2 border-accent pt-4 w-full">
         <nav>
           <ul className="w-full  flex flex-col gap-6 items-center">
-            <NavLink to="/ai" className={navLinkStyle}>
-              {({ isActive }) => (
-                <>
-                  <BotMessageSquare size={22} className={iconStyle(isActive)} />
-                  <span>AI</span>
-                </>
-              )}
-            </NavLink>
-
             <li
               onClick={logoutUser}
               className="flex flex-col justify-center items-center gap-2 font-semibold text-base-content/50 hover:text-base-content cursor-pointer text-xs transition-colors"
