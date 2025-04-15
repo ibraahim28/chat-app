@@ -8,13 +8,13 @@ const userRouter = require("../src/routers/userRouter");
 const messageRouter = require("../src/routers/messageRouter");
 const protectRoute = require("../src/middlewares/protectRoute");
 
-
 app.use(
   cors({
-    origin: "https://chatmore-ibra.netlify.app",
+    origin: "*",
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
