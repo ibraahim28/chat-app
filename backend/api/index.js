@@ -11,7 +11,7 @@ const protectRoute = require("../src/middlewares/protectRoute");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://chatmore-ibra.netlify.app",
     credentials: true,
   })
 );
