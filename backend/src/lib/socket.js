@@ -8,13 +8,13 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["https://chatmore-ibra.netlify.app"],
+    origin: "https://chatmore-ibra.netlify.app",
   },
 });
 
-const getReceiverSocketId = (userId)=> {
+const getReceiverSocketId = (userId) => {
   return userSocketMap[userId];
-}
+};
 
 const userSocketMap = {};
 
@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
 
     delete userSocketMap[userId];
 
-    io.emit("getOnlineUsers", Object.keys(userSocketMap))
+    io.emit("getOnlineUsers", Object.keys(userSocketMap));
   });
 });
 
