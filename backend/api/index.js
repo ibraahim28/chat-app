@@ -17,10 +17,13 @@ app.use(
 
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
-
 app.use("/auth", authRouter);
 app.use("/users", protectRoute, userRouter);
 app.use("/messages", protectRoute, messageRouter);
+
+app.get("/", (req, res)=>{
+  res.send("Backend is working")
+})
 
 // const PORT = process.env.PORT || 5000;
 // server.listen(PORT, () => {
