@@ -9,6 +9,8 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: ["https://chatmore-ibra.netlify.app"],
+    credentials: true,
+    allowedHeaders: ["my-custom-header"],
   },
 });
 
