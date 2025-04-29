@@ -45,8 +45,8 @@ export const useAuthStore = create((set, get) => ({
       localStorage.setItem("user", JSON.stringify(res.data));
       toast.success("Account created successfully");
     } catch (error) {
-      console.log("error in signup", error?.message);
-      toast.error(error?.message || "Error in Signing up");
+      console.log("error in signup", error?.response);
+      toast.error(error?.response?.data?.message || "Error in Signing up");
     } finally {
       set({ isSigningUp: false });
     }
@@ -64,8 +64,8 @@ export const useAuthStore = create((set, get) => ({
 
       get().connectSocket();
     } catch (error) {
-      console.log("error in signin", error?.message);
-      toast.error(error?.message || "Error in Signing in");
+      console.log("error in signin", error);
+      toast.error(error?.response?.data?.message || "Error in Signing in");
     } finally {
       set({ isSigningIn: false });
     }
@@ -87,15 +87,11 @@ export const useAuthStore = create((set, get) => ({
     if (!authUser || get().socket?.connected) return;
     const socket = io(BASE_URL, {
       query: { userId: authUser._id },
-      withCredentials: true,
-      extraHeaders: {
-        "my-custom-header": "abcd"
-      }
     });
 
     socket.connect();
 
-    set({ socket });
+    set({ socket:socket });
 
     socket.on("getOnlineUsers", (userIds) => {
       set({ onlineUsers: userIds });
@@ -117,7 +113,7 @@ export const useAuthStore = create((set, get) => ({
       toast.success("Profile updated successfully");
     } catch (error) {
       console.log("error in update profile:", error);
-      toast.error(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message || "Error in updaing profile");
     } finally {
       set({ isUpdatingProfile: false });
     }

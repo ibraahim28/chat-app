@@ -1,23 +1,27 @@
 import { Loader, Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ChatListItem from "./ChatListItem";
 import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
 
 const ChatSidebar = () => {
-  const { users, isUsersLoading, getUsers } = useChatStore();
+  const { users, isUsersLoading, getUsers, searchText, setSearchText, setFilterOnlineOnly, filterOnlineOnly } =
+    useChatStore();
   const { onlineUsers } = useAuthStore();
-  const [showOnlineOnly, setShowOnlineOnly] = useState(false);
+  // const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
   useEffect(() => {
     getUsers();
   }, [getUsers]);
 
-  const filteredUsers = showOnlineOnly
-    ? users.filter((user) => onlineUsers.includes(user._id))
-    : users;
+  const filteredUsers = users.filter((user) => {
+    const isOnline = !filterOnlineOnly || onlineUsers.includes(user._id);
+    const matchesSearch =
+      !searchText ||
+      user.username.toLowerCase().includes(searchText.toLowerCase());
+    return isOnline && matchesSearch;
+  });
 
-  console.log(filteredUsers);
 
   return (
     <div className="bg-base-100 text-base-content w-1/4 h-screen border-r-2 border-base-300 flex flex-col overflow-y-auto">
@@ -25,6 +29,7 @@ const ChatSidebar = () => {
         <input
           type="text"
           placeholder="Search..."
+          onChange={(e) => setSearchText(e.target.value)}
           className="relative w-full p-2 border border-accent-content rounded-xl bg-base-300"
         />
         <div className="absolute right-8">
@@ -39,8 +44,8 @@ const ChatSidebar = () => {
         <label className="flex items-center gap-2 text-sm text-base-content/80">
           <input
             type="checkbox"
-            checked={showOnlineOnly}
-            onChange={() => setShowOnlineOnly((prev) => !prev)}
+            checked={filterOnlineOnly}
+            onChange={() => setFilterOnlineOnly()}
             className="checkbox checkbox-sm checkbox-accent"
           />
           Show Online Only
@@ -53,13 +58,25 @@ const ChatSidebar = () => {
         </div>
       ) : (
         <div className="flex flex-col">
-          {filteredUsers.length === 0 && setShowOnlineOnly
-            ? "No users Online"
-            : filteredUsers.length === 0 && !setShowOnlineOnly
-            ? "No users available"
-            : filteredUsers.map((user) => (
-                <ChatListItem key={user._id} user={user} />
-              ))}
+          {filteredUsers.length === 0 ? (
+            searchText ? (
+              <div className="p-4 text-center text-base-content/60">
+                No users found
+              </div>
+            ) : filterOnlineOnly ? (
+              <div className="p-4 text-center text-base-content/60">
+                No users online
+              </div>
+            ) : (
+              <div className="p-4 text-center text-base-content/60">
+                No users available
+              </div>
+            )
+          ) : (
+            filteredUsers.map((user) => (
+              <ChatListItem key={user._id} user={user} />
+            ))
+          )}
         </div>
       )}
     </div>

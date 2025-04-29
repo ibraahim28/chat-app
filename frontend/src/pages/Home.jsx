@@ -7,7 +7,6 @@ import ChatSideMenu from '../components/ChatSideMenu'
 
 const Home = () => {
   const {selectedChat, isSideMenuOpen} = useChatStore()
-  console.log("Home is rendering=======================")
   return (
     <div className='flex h-screen bg-base-200'>
       <ChatSidebar />

@@ -10,6 +10,8 @@ export const useChatStore = create((set, get) => ({
   isUsersLoading: false,
   isMessagesLoading: false,
   isSideMenuOpen: false,
+  searchText: "",
+  filterOnlineOnly : false,
 
   getUsers: async () => {
     set({ isUsersLoading: true });
@@ -90,7 +92,12 @@ export const useChatStore = create((set, get) => ({
     if (!selectedChat || !socket) return;
 
     socket.on("newMessage", ({ newMessage }) => {
-      if (newMessage.senderId !== selectedChat._id) return;
+
+      const isChatRelevant =
+      newMessage.sender === selectedChat._id || newMessage.receiver === selectedChat._id
+
+      if (!isChatRelevant) return;
+
       set({ messages: [...get().messages, newMessage] });
     });
   },
@@ -106,4 +113,13 @@ export const useChatStore = create((set, get) => ({
   setSideMenu: (isSideMenuOpen) => {
     set({ isSideMenuOpen: !isSideMenuOpen });
   },
+
+  setSearchText: (text) => {
+    if (!text.trim()) {
+      set({ searchText: "" });
+    } else {
+      set({ searchText: text });
+    }
+  },
+  setFilterOnlineOnly : () => set({filterOnlineOnly : !get().filterOnlineOnly}),
 }));

@@ -3,26 +3,34 @@ import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
 
 const ChatListItem = ({ user }) => {
-
   const { _id, username, lastMessage } = user;
 
-  const {setSelectedChat, selectedChat} = useChatStore();
-  const {onlineUsers} = useAuthStore();
+  const { setSelectedChat, selectedChat } = useChatStore();
+  const { onlineUsers } = useAuthStore();
 
   return (
     <div
       onClick={() => setSelectedChat(user)}
       className={`flex px-2 py-4 gap-4 items-center border-b-2 border-base-300 cursor-pointer 
-        ${selectedChat === user ? "bg-base-300 ring-1 ring-base-300" : "hover:bg-base-200"}`}
+        ${
+          selectedChat === user
+            ? "bg-base-300 ring-1 ring-base-300"
+            : "hover:bg-base-200"
+        }`}
     >
       {/* Profile Image */}
       <div className="relative">
-        <img src={user.profilePicture || "/images/Untitled.jpg"} alt="User Profile" className="size-10 rounded-full" />
+        <img
+          src={user.profilePicture || "/images/avatar-icon.png"}
+          alt="User Profile"
+          className="size-10 rounded-full"
+        />
         {onlineUsers.includes(user._id?.toString()) && (
-                <span
-                  className="absolute bottom-0 right-0 size-3 bg-green-500 
+          <span
+            className="absolute bottom-0 right-0 size-3 bg-green-500 
                   rounded-full ring-2 ring-zinc-900"
-                />)}
+          />
+        )}
       </div>
 
       {/* Chat Info */}

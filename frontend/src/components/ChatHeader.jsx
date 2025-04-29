@@ -12,7 +12,7 @@ const ChatHeader = () => {
         <h1 className="font-semibold  text-4xl text-base-content ">
           {selectedChat && selectedChat?.username}
         </h1>
-        {/* apply logic for online and last seen later */}
+        
         <p className="mt-1 text-xs text-base-content/70">
           {onlineUsers.includes(selectedChat._id) ? "Online" : "Offline"}
         </p>

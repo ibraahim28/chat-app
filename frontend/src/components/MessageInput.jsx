@@ -62,13 +62,18 @@ const MessageInput = () => {
         <div className="w-full relative">
           <input
             type="text"
-            className=" input input-bordered input-sm sm:input-md pl-14 py-4 w-full  rounded-xl"
+            className="input input-bordered input-sm sm:input-md pl-14 py-4 w-full rounded-xl"
             placeholder="Your Message"
             value={text}
-            onChange={(e) => {
-              setText(e.target.value);
+            onChange={(e) => setText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && (text.trim() || imagePreview)) {
+                e.preventDefault(); // Prevent new line
+                handleSendMessage();
+              }
             }}
           />
+
           <input
             type="file"
             className="hidden"

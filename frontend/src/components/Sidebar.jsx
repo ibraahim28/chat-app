@@ -30,14 +30,15 @@ const Sidebar = () => {
 
         setUser(userData);
 
-        console.log(userData);
       } catch (error) {
         console.error("Error fetching join date", error);
       }
     };
     fetchUser();
 
-  }, [authUser._id]);
+  }, [authUser._id, setUser]);
+
+
 
   const navLinkStyle = ({ isActive }) =>
     `flex flex-col justify-center items-center gap-2 font-semibold text-xs group transition-colors ${
@@ -53,13 +54,13 @@ const Sidebar = () => {
 
   return (
     <div className="bg-base-100 border-r-2 border-base-300 h-screen w-24 flex flex-col justify-between items-center px-2 py-4 text-accent-content">
-      {/* Top: Avatar + Nav */}
+    
       <div className="flex flex-col gap-4">
         <div className="w-full flex justify-center items-center">
           <img
-            src={user.profilePicture || "/images/avatar-icon.png"}
+            src={user?.profilePicture || "/images/avatar-icon.png"}
             alt="user-logo"
-            className="w-12 rounded-full"
+            className="w-12  rounded-full"
           />
         </div>
 
