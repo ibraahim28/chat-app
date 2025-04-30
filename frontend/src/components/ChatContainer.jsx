@@ -67,7 +67,7 @@ const ChatContainer = () => {
 
   if (isMessagesLoading) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex w-full flex-col  h-screen">
         <ChatHeader />
         <MessageSkeleton />
         <MessageInput />

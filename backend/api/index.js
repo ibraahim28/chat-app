@@ -10,13 +10,20 @@ const protectRoute = require("../src/middlewares/protectRoute");
 
 
 app.use(express.json());
+const allowedOrigins = ["https://chatmore-ibra.netlify.app", "http://localhost:5173"];
+
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://chatmore-ibra.netlify.app"],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
-
 
 
 app.use("/uploads", express.static("uploads"));

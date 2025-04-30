@@ -1,6 +1,5 @@
 import React from 'react'
 import Sidebar from '../components/Sidebar'
-import { Outlet } from 'react-router-dom'
 const AppLayout = ({Children}) => {
   return (
     <div className='flex w-screen'>

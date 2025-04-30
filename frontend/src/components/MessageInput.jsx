@@ -96,7 +96,7 @@ const MessageInput = () => {
             />
           </button>
         </div>
-        <div className="h-full">
+        <div className="">
           {" "}
           <button
             className="btn btn-sm "
